@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Traffic Statistics</h2>
+<p>You can find out traffic usage in this page</p>
+<table class="table table-hover">
+    <tbody>
+        <tr>
+            <td>IP Address</td>
+            <td>{{ address }}</td>
+        </tr>
+        <tr>
+            <td>Time Elapsed</td>
+            <td> {{ time }}</td>
+        </tr>
+        <tr>
+            <td>Traffic Usage</td>
+            <td> {{ usage }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div align='center'>
+    <a class="" href="{{ url_for('auth.logout_page') }}"><button type="button" class="btn btn-secondary" align='center'>Logout</button></a>
+</div>
+{% endblock content %},

@@ -24,6 +24,7 @@ class UserModel(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.png')
     password = db.Column(db.String(60), nullable=False)
+    login_time = db.Column(db.DateTime) 
 
     def __repr__(self):
         return f"<User: '{self.username}' '{self.email}' '{self.image_file}'>"

@@ -1,5 +1,6 @@
 import os
 import secrets
+from datetime import datetime
 
 # third-party imports
 from flask import (abort, current_app, flash, redirect, render_template,
@@ -45,8 +46,10 @@ def login_page():
         user = UserModel.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember_me.data)
+            user.login_time = datetime.now()
+            db.session.commit()
             next_url = request.args.get('next')
-            return redirect(next_url) if next_url else redirect(url_for('home.homepage'))
+            return redirect(next_url) if next_url else redirect(url_for('home.dashboard_page'))
 
         flash("Login unsuccessful. Please check your email and password", 'danger')
     return render_template('auth/login.html', title="Login", form=form)
