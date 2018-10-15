@@ -2,7 +2,8 @@
 from flask_login import current_user
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileField
-from wtforms import BooleanField, PasswordField, StringField, SubmitField
+from wtforms import BooleanField, PasswordField, StringField, SubmitField, SelectField
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import (DataRequired, Email, EqualTo, Length,
                                 ValidationError)
 
@@ -38,6 +39,7 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Keep me signed in')
+    region = SelectField('Region', choices = [('a', 'A'), ('b', 'B')])
     admin = BooleanField('Login as admin')
     submit = SubmitField('Login')
 
