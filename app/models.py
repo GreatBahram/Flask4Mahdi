@@ -12,6 +12,13 @@ def load_user(user_id):
     return UserModel.query.get(int(user_id))
 
 
+class RegionModel(db.Model, UserMixin):
+    """ Create an User table """
+    __tablename__ = 'users'
+
+    id = db.Column(db.Integer, primary_key=True)
+    region =  db.Column(db.String(40), unique=True, nullable=False)
+
 class UserModel(db.Model, UserMixin):
     """ Create an User table """
     __tablename__ = 'users'
@@ -23,6 +30,7 @@ class UserModel(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=False, default='default.png')
     password = db.Column(db.String(60), nullable=False)
     login_time = db.Column(db.DateTime) 
+    ip_address =db.Column(db.String(15), nullable=True, default='0.0.0.0')
 
     def __repr__(self):
         return f"<User: '{self.username}' '{self.email}' '{self.image_file}'>"
