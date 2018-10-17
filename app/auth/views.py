@@ -43,6 +43,9 @@ def login_page():
 
     form = LoginForm()
     if form.validate_on_submit():
+        if current_user.admin: # if the admin checkbox checked
+            #### write what-ever you want here after you realize it's legitimate user then use login_user function like below
+            return redirect(url_for('home.admin_dashboard'))
         user = UserModel.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember_me.data)

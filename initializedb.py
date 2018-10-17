@@ -14,7 +14,7 @@ import getpass
 
 # local imports
 from app import db, create_app
-#from pyaccounting.models import Person
+from app.models import UserModel, RegionModel
 
 # instantiate and config the logger
 logger = logging.getLogger(__name__)
@@ -47,22 +47,24 @@ logger.info('Creating all tables...')
 db.create_all()
 
 ## Administrator User
-#admin_forename = input("What's your first-name? ")
-#admin_surname = input("What's your last-name? ")
-#admin_username = input('Enter a username for administrator, please: ')
-#admin_password = getpass.getpass(prompt='Enter a password for administrator, please: ')
-#admin_email = input('Enter an email for administrator, please: ')
+admin_username = input('Enter a username for administrator, please: ')
+admin_password = getpass.getpass(prompt='Enter a password for administrator, please: ')
+admin_email = input('Enter an email for administrator, please: ')
 #
-#admin = Person(
-#        forename=admin_forename.capitalize(),
-#        surname=admin_surname.capitalize(),
-#        username=admin_username,
-#        email=admin_email,
-#        password=admin_password,
-#        is_admin=True,
-#        )
+region = RegionModel(name='Region A')
+admin = UserModel(
+        username=admin_username,
+        email=admin_email,
+        password=admin_password,
+        is_admin=True,
+        region=region,
+        )
 #
-## save admin user to the database
-#logger.info('Adding admin user to database...')
-#db.session.add(admin)
-#db.session.commit()
+logger.info('Adding admin user to database...')
+admin.save_to_db()
+
+user1 = UserModel(username='user1', email='user1@gmail.com', password='a', region=region,)
+user2 = UserModel(username='user2', email='user2@gmail.com', password='a', region=region,)
+
+user1.save_to_db()
+user2.save_to_db()
