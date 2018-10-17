@@ -14,10 +14,19 @@ def load_user(user_id):
 
 class RegionModel(db.Model, UserMixin):
     """ Create an User table """
-    __tablename__ = 'users'
+    __tablename__ = 'regions'
 
     id = db.Column(db.Integer, primary_key=True)
-    region =  db.Column(db.String(40), unique=True, nullable=False)
+    name =  db.Column(db.String(40), unique=True, nullable=False)
+    users = db.relationship('UserModel', backref='region')
+
+    def __repr__(self):
+        return f"<Region: {self.name}>"
+
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+    
 
 class UserModel(db.Model, UserMixin):
     """ Create an User table """
@@ -31,6 +40,7 @@ class UserModel(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     login_time = db.Column(db.DateTime) 
     ip_address =db.Column(db.String(15), nullable=True, default='0.0.0.0')
+    region_id = db.Column(db.Integer, db.ForeignKey('regions.id'))
 
     def __repr__(self):
         return f"<User: '{self.username}' '{self.email}' '{self.image_file}'>"
